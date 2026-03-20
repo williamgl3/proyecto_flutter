@@ -7,6 +7,7 @@ import '../widgets/item_movimiento.dart';
 import '../models/tarjeta_model.dart';
 import '../models/movimiento_model.dart';
 import 'pantalla_cuentas.dart';
+import 'pantalla_inversiones.dart';
 
 class PantallaPrincipal extends StatefulWidget {
   const PantallaPrincipal({super.key});
@@ -74,6 +75,8 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
         return const PantallaCuentas();
       case 2:
         return const PantallaMovimientos();
+      case 3:
+        return const PantallaInversiones();
       default:
         return PantallaGenerica(titulo: opcionesMenu[indiceSeleccionado]);
     }
