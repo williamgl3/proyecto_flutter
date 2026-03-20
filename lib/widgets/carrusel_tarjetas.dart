@@ -4,8 +4,13 @@ import '../models/tarjeta_model.dart';
 
 class CarruselTarjetas extends StatelessWidget {
   final List<TarjetaModel> tarjetas;
+  final bool ocultarSaldos;
 
-  const CarruselTarjetas({super.key, required this.tarjetas});
+  const CarruselTarjetas({
+    super.key,
+    required this.tarjetas,
+    this.ocultarSaldos = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +26,7 @@ class CarruselTarjetas extends StatelessWidget {
             child: TarjetaBancaria(
               tarjeta: tarjetas[index],
               esPequena: index != 0, // La primera es más grande
+              ocultarSaldo: ocultarSaldos,
             ),
           );
         },

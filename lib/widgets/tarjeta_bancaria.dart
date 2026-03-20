@@ -4,11 +4,13 @@ import '../models/tarjeta_model.dart';
 class TarjetaBancaria extends StatelessWidget {
   final TarjetaModel tarjeta;
   final bool esPequena;
+  final bool ocultarSaldo;
 
   const TarjetaBancaria({
     super.key,
     required this.tarjeta,
     this.esPequena = false,
+    this.ocultarSaldo = false,
   });
 
   @override
@@ -42,9 +44,9 @@ class TarjetaBancaria extends StatelessWidget {
             children: [
               Text(
                 tarjeta.titular,
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: esPequena ? 14 : 16,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -55,17 +57,14 @@ class TarjetaBancaria extends StatelessWidget {
           if (!esPequena) ...[
             const SizedBox(height: 10),
             Text(
-              '\$${tarjeta.balance.toStringAsFixed(0)}',
+              ocultarSaldo ? '****' : '\$${tarjeta.balance.toStringAsFixed(0)}',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ],
-          
-          if (!esPequena)
-            Text(
+             Text(
               tarjeta.numeroTarjeta,
               style: const TextStyle(
                 color: Colors.white70,
@@ -73,18 +72,22 @@ class TarjetaBancaria extends StatelessWidget {
                 letterSpacing: 2,
               ),
             ),
+          ],
+          
+         
           
           // Información de balance y sobregiro
           Row(
             children: [
               _buildInfoItem(
                 'Balance',
-                '\$${tarjeta.balance.toStringAsFixed(0)}',
+                ocultarSaldo ? '****' : '\$${tarjeta.balance.toStringAsFixed(0)}',
                 esPequena,
               ),
+              const SizedBox(width: 20),
               _buildInfoItem(
                 'Sobregiro',
-                '\$${tarjeta.sobregiro.toStringAsFixed(0)}',
+                ocultarSaldo ? '****' : '\$${tarjeta.sobregiro.toStringAsFixed(0)}',
                 esPequena,
               ),
             ],
@@ -95,28 +98,26 @@ class TarjetaBancaria extends StatelessWidget {
   }
 
   Widget _buildInfoItem(String label, String value, bool esPequena) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: esPequena ? 10 : 12,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: esPequena ? 10 : 12,
           ),
-          const SizedBox(height: 2),
-          Text(
-            value,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: esPequena ? 12 : 14,
-              fontWeight: FontWeight.w600,
-            ),
+        ),
+        const SizedBox(height: 2),
+        Text(
+          value,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: esPequena ? 12 : 14,
+            fontWeight: FontWeight.w600,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

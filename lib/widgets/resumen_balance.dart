@@ -5,6 +5,7 @@ class ResumenBalance extends StatelessWidget {
   final double gastos;
   final double ingresos;
   final double mes;
+  final bool ocultarSaldos;
 
   const ResumenBalance({
     super.key,
@@ -12,6 +13,7 @@ class ResumenBalance extends StatelessWidget {
     required this.gastos,
     required this.ingresos,
     required this.mes,
+    this.ocultarSaldos = false,
   });
 
   @override
@@ -66,7 +68,7 @@ class ResumenBalance extends StatelessWidget {
         ),
         const SizedBox(height: 2),
         Text(
-          valor,
+          ocultarSaldos ? '****' : valor,
           style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.bold,

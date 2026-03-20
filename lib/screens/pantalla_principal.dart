@@ -8,6 +8,7 @@ import '../models/tarjeta_model.dart';
 import '../models/movimiento_model.dart';
 import 'pantalla_cuentas.dart';
 import 'pantalla_inversiones.dart';
+import 'pantalla_configuracion.dart';
 
 class PantallaPrincipal extends StatefulWidget {
   const PantallaPrincipal({super.key});
@@ -18,6 +19,7 @@ class PantallaPrincipal extends StatefulWidget {
 
 class _PantallaPrincipalState extends State<PantallaPrincipal> {
   int indiceSeleccionado = 0;
+  bool _ocultarSaldos = false;
 
   final List<String> opcionesMenu = [
     'Tarjetas',
@@ -30,6 +32,12 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
   void cambiarOpcion(int indice) {
     setState(() {
       indiceSeleccionado = indice;
+    });
+  }
+
+  void _toggleOcultarSaldos(bool valor) {
+    setState(() {
+      _ocultarSaldos = valor;
     });
   }
 
@@ -70,13 +78,18 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
   Widget _construirContenido() {
     switch (indiceSeleccionado) {
       case 0:
-        return const PantallaTarjetas();
+        return PantallaTarjetas(ocultarSaldos: _ocultarSaldos);
       case 1:
         return const PantallaCuentas();
       case 2:
         return const PantallaMovimientos();
       case 3:
-        return const PantallaInversiones();
+        return PantallaInversiones(ocultarSaldos: _ocultarSaldos);
+      case 4:
+        return PantallaConfiguracion(
+          ocultarSaldos: _ocultarSaldos,
+          onOcultarSaldosChanged: _toggleOcultarSaldos,
+        );
       default:
         return PantallaGenerica(titulo: opcionesMenu[indiceSeleccionado]);
     }
@@ -85,7 +98,12 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
 
 // Pantalla de Tarjetas
 class PantallaTarjetas extends StatelessWidget {
-  const PantallaTarjetas({super.key});
+  final bool ocultarSaldos;
+
+  const PantallaTarjetas({
+    super.key,
+    this.ocultarSaldos = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -113,15 +131,19 @@ class PantallaTarjetas extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Carrusel de tarjetas
-          CarruselTarjetas(tarjetas: tarjetas),
+          CarruselTarjetas(
+            tarjetas: tarjetas,
+            ocultarSaldos: ocultarSaldos,
+          ),
           const SizedBox(height: 30),
 
           // Resumen de balance
-          const ResumenBalance(
+          ResumenBalance(
             balance: 2505,
             gastos: 343,
             ingresos: 950,
             mes: 227,
+            ocultarSaldos: ocultarSaldos,
           ),
           const SizedBox(height: 30),
 
