@@ -6,6 +6,7 @@ import '../widgets/resumen_balance.dart';
 import '../widgets/item_movimiento.dart';
 import '../models/tarjeta_model.dart';
 import '../models/movimiento_model.dart';
+import 'pantalla_cuentas.dart';
 
 class PantallaPrincipal extends StatefulWidget {
   const PantallaPrincipal({super.key});
@@ -42,7 +43,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
             indiceSeleccionado: indiceSeleccionado,
             onItemTapped: cambiarOpcion,
           ),
-          
+
           // Contenido principal
           Expanded(
             child: Column(
@@ -52,7 +53,7 @@ class _PantallaPrincipalState extends State<PantallaPrincipal> {
                   nombre: 'Stephanie Jones',
                   saludo: 'Bienvenida',
                 ),
-                
+
                 // Contenido según la opción seleccionada
                 Expanded(
                   child: _construirContenido(),
@@ -107,11 +108,11 @@ class PantallaTarjetas extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
-          
+
           // Carrusel de tarjetas
           CarruselTarjetas(tarjetas: tarjetas),
           const SizedBox(height: 30),
-          
+
           // Resumen de balance
           const ResumenBalance(
             balance: 2505,
@@ -120,14 +121,14 @@ class PantallaTarjetas extends StatelessWidget {
             mes: 227,
           ),
           const SizedBox(height: 30),
-          
+
           // Movimientos recientes
           const Text(
             'Movimientos Recientes',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 15),
-          
+
           ListView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -137,21 +138,6 @@ class PantallaTarjetas extends StatelessWidget {
             },
           ),
         ],
-      ),
-    );
-  }
-}
-
-// Pantalla de Cuentas
-class PantallaCuentas extends StatelessWidget {
-  const PantallaCuentas({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'Pantalla de Cuentas',
-        style: TextStyle(fontSize: 18),
       ),
     );
   }
