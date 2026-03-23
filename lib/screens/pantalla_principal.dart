@@ -123,7 +123,16 @@ class PantallaTarjetas extends StatelessWidget {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                          'Función "Agregar Tarjeta" próximamente disponible'),
+                      duration: Duration(milliseconds: 1500),
+                      backgroundColor: Color(0xFF1E3A8A),
+                    ),
+                  );
+                },
                 child: const Text('+ Agregar Tarjeta'),
               ),
             ],

@@ -48,7 +48,15 @@ class PantallaCuentas extends StatelessWidget {
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               OutlinedButton.icon(
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Entrando a: Abrir cuenta'),
+                      duration: Duration(milliseconds: 1500),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                },
                 icon: const Icon(Icons.add),
                 label: const Text('Abrir cuenta'),
               ),
@@ -72,10 +80,10 @@ class PantallaCuentas extends StatelessWidget {
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 12),
-          Wrap(
+          const Wrap(
             spacing: 10,
             runSpacing: 10,
-            children: const [
+            children: [
               _AccionCuenta(icono: Icons.swap_horiz, texto: 'Transferir'),
               _AccionCuenta(icono: Icons.qr_code_scanner, texto: 'Cobrar'),
               _AccionCuenta(icono: Icons.receipt_long, texto: 'Pagar servicio'),
@@ -267,7 +275,15 @@ class _AccionCuenta extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
-      onTap: () {},
+      onTap: () {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Entrando a: $texto'),
+            duration: const Duration(milliseconds: 1500),
+            backgroundColor: Colors.green,
+          ),
+        );
+      },
       child: Ink(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
         decoration: BoxDecoration(

@@ -43,14 +43,20 @@ class _PantallaConfiguracionState extends State<PantallaConfiguracion> {
             'Oculta los montos en todas las pantallas por privacidad',
             Icons.visibility_off,
             widget.ocultarSaldos,
-            (val) => widget.onOcultarSaldosChanged(val),
+            (val) {
+              widget.onOcultarSaldosChanged(val);
+              _mostrarSnackBar(context, 'Entrando a: Ocultar Saldos');
+            },
           ),
           _buildSwitchItem(
             'Notificaciones Push',
             'Recibe alertas de movimientos y ofertas',
             Icons.notifications_active,
             _notificaciones,
-            (val) => setState(() => _notificaciones = val),
+            (val) {
+              setState(() => _notificaciones = val);
+              _mostrarSnackBar(context, 'Entrando a: Notificaciones Push');
+            },
           ),
 
           const SizedBox(height: 25),
@@ -62,12 +68,18 @@ class _PantallaConfiguracionState extends State<PantallaConfiguracion> {
             'Usar huella o rostro para ingresar',
             Icons.fingerprint,
             _biometria,
-            (val) => setState(() => _biometria = val),
+            (val) {
+              setState(() => _biometria = val);
+              _mostrarSnackBar(context, 'Entrando a: Biometría');
+            },
           ),
           _buildActionItem(
             'Cambiar Contraseña',
             Icons.lock_outline,
-            () => _mostrarDialogoConstruccion(context, 'Cambio de Contraseña'),
+            () {
+              _mostrarSnackBar(context, 'Entrando a: Cambio de Contraseña');
+              _mostrarDialogoConstruccion(context, 'Cambio de Contraseña');
+            },
           ),
 
           const SizedBox(height: 25),
@@ -77,18 +89,33 @@ class _PantallaConfiguracionState extends State<PantallaConfiguracion> {
           _buildActionItem(
             'Ayuda y Soporte',
             Icons.help_outline,
-            () => _mostrarDialogoConstruccion(context, 'Centro de Ayuda'),
+            () {
+              _mostrarSnackBar(context, 'Entrando a: Centro de Ayuda');
+              _mostrarDialogoConstruccion(context, 'Centro de Ayuda');
+            },
           ),
           _buildActionItem(
             'Términos y Condiciones',
             Icons.description_outlined,
-            () => _mostrarDialogoConstruccion(context, 'Términos Legales'),
+            () {
+              _mostrarSnackBar(context, 'Entrando a: Términos Legales');
+              _mostrarDialogoConstruccion(context, 'Términos Legales');
+            },
           ),
-          
+
           const SizedBox(height: 30),
           Center(
             child: TextButton(
-              onPressed: () => _mostrarDialogoCerrarSesion(context),
+              onPressed: () {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Cerrando sesión...'),
+                    duration: Duration(milliseconds: 1500),
+                    backgroundColor: Color(0xFFDC2626),
+                  ),
+                );
+                _mostrarDialogoCerrarSesion(context);
+              },
               style: TextButton.styleFrom(foregroundColor: Colors.red),
               child: const Text('Cerrar Sesión'),
             ),
@@ -153,7 +180,8 @@ class _PantallaConfiguracionState extends State<PantallaConfiguracion> {
           ),
           IconButton(
             icon: const Icon(Icons.edit, color: Colors.blue),
-            onPressed: () => _mostrarDialogoConstruccion(context, 'Editar Perfil'),
+            onPressed: () =>
+                _mostrarDialogoConstruccion(context, 'Editar Perfil'),
           ),
         ],
       ),
@@ -186,7 +214,7 @@ class _PantallaConfiguracionState extends State<PantallaConfiguracion> {
           ),
           child: Icon(icon, color: Colors.blue),
         ),
-        activeColor: Colors.blue,
+        activeThumbColor: Colors.blue,
       ),
     );
   }
@@ -209,7 +237,18 @@ class _PantallaConfiguracionState extends State<PantallaConfiguracion> {
           ),
           child: Icon(icon, color: Colors.black87),
         ),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+        trailing:
+            const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
+      ),
+    );
+  }
+
+  void _mostrarSnackBar(BuildContext context, String mensaje) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(mensaje),
+        duration: const Duration(milliseconds: 500),
+        backgroundColor: Colors.green,
       ),
     );
   }
@@ -244,6 +283,7 @@ class _PantallaConfiguracionState extends State<PantallaConfiguracion> {
           TextButton(
             onPressed: () {
               Navigator.pop(context);
+              _mostrarSnackBar(context, 'Entrando a: Cerrar Sesión');
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Sesión cerrada (Simulado)')),
               );

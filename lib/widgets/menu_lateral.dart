@@ -32,9 +32,19 @@ class MenuLateral extends StatelessWidget {
                 itemCount: opciones.length,
                 itemBuilder: (context, index) {
                   return _buildMenuItem(
+                    context: context,
                     opcion: opciones[index],
                     isSelected: indiceSeleccionado == index,
-                    onTap: () => onItemTapped(index),
+                    onTap: () {
+                      onItemTapped(index);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Entrando a: ${opciones[index]}'),
+                          duration: const Duration(milliseconds: 500),
+                          backgroundColor: Colors.green,
+                        ),
+                      );
+                    },
                   );
                 },
               ),
@@ -46,26 +56,25 @@ class MenuLateral extends StatelessWidget {
   }
 
   Widget _buildHeader() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(18, 18, 18, 10),
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(18, 18, 18, 10),
       child: Column(
         children: [
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.notifications_none, color: Colors.white70, size: 20),
               Icon(Icons.search, color: Colors.white70, size: 20),
             ],
           ),
-          const SizedBox(height: 18),
-          const CircleAvatar(
+          SizedBox(height: 18),
+          CircleAvatar(
             radius: 28,
             backgroundImage: NetworkImage(
               'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80',
             ),
           ),
-          const SizedBox(height: 10),
-          const Text(
+          SizedBox(height: 10),
+          Text(
             'Stephanie Jones',
             style: TextStyle(
               color: Colors.white,
@@ -79,6 +88,7 @@ class MenuLateral extends StatelessWidget {
   }
 
   Widget _buildMenuItem({
+    required BuildContext context,
     required String opcion,
     required bool isSelected,
     required VoidCallback onTap,
