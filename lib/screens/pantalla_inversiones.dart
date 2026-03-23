@@ -41,7 +41,7 @@ class PantallaInversiones extends StatelessWidget {
 
           // Tarjeta Principal de Balance
           _buildBalanceCard(total, rendimientoTotal, porcentajeRendimiento),
-          
+
           const SizedBox(height: 25),
 
           // Gráfico simulado
@@ -68,16 +68,17 @@ class PantallaInversiones extends StatelessWidget {
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               TextButton(
-                onPressed: () => _mostrarPortafolioCompleto(context, inversiones),
+                onPressed: () =>
+                    _mostrarPortafolioCompleto(context, inversiones),
                 child: const Text('Ver todo'),
               ),
             ],
           ),
           const SizedBox(height: 10),
           ...inversiones.map((item) => GestureDetector(
-            onTap: () => _mostrarDetalleInversion(context, item),
-            child: _buildInvestmentItem(item),
-          )),
+                onTap: () => _mostrarDetalleInversion(context, item),
+                child: _buildInvestmentItem(item),
+              )),
 
           const SizedBox(height: 25),
 
@@ -96,7 +97,7 @@ class PantallaInversiones extends StatelessWidget {
             Colors.orange,
           ),
           const SizedBox(height: 10),
-           _buildNewsCard(
+          _buildNewsCard(
             context,
             'Tendencias de Mercado',
             'El sector tecnológico muestra un repunte del 3% esta semana.',
@@ -154,18 +155,23 @@ class PantallaInversiones extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.arrow_upward, color: Colors.greenAccent, size: 16),
+                    const Icon(Icons.arrow_upward,
+                        color: Colors.greenAccent, size: 16),
                     const SizedBox(width: 4),
                     Text(
                       '$porcentaje%',
-                      style: const TextStyle(color: Colors.greenAccent, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          color: Colors.greenAccent,
+                          fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
               const SizedBox(width: 10),
               Text(
-                ocultarSaldos ? '****' : '+\$${ganancia.toStringAsFixed(2)} rendimientos',
+                ocultarSaldos
+                    ? '****'
+                    : '+\$${ganancia.toStringAsFixed(2)} rendimientos',
                 style: const TextStyle(color: Colors.white70, fontSize: 12),
               ),
             ],
@@ -177,7 +183,7 @@ class PantallaInversiones extends StatelessWidget {
 
   Widget _buildChartPlaceholder() {
     return Container(
-      height: 150,
+      height: 160,
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -188,7 +194,7 @@ class PantallaInversiones extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: List.generate(7, (index) {
-          final height = 40 + (index * 12) % 80 + (index % 2 * 20); 
+          final height = 20 + (index * 12) % 80 + (index % 2 * 20);
           return Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -196,7 +202,8 @@ class PantallaInversiones extends StatelessWidget {
                 width: 12,
                 height: height.toDouble(),
                 decoration: BoxDecoration(
-                  color: index == 6 ? Colors.blue : Colors.blue.withOpacity(0.3),
+                  color:
+                      index == 6 ? Colors.blue : Colors.blue.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(4),
                 ),
               ),
@@ -214,10 +221,30 @@ class PantallaInversiones extends StatelessWidget {
 
   Widget _buildQuickActions(BuildContext context) {
     final actions = [
-      ('Depositar', Icons.add, Colors.green, () => _mostrarBottomSheetOperacion(context, 'Depositar')),
-      ('Retirar', Icons.remove, Colors.orange, () => _mostrarBottomSheetOperacion(context, 'Retirar')),
-      ('Análisis', Icons.analytics, Colors.purple, () => _mostrarDialogoAnalisis(context)),
-      ('Historial', Icons.history, Colors.blue, () => _mostrarHistorial(context)),
+      (
+        'Depositar',
+        Icons.add,
+        Colors.green,
+        () => _mostrarBottomSheetOperacion(context, 'Depositar')
+      ),
+      (
+        'Retirar',
+        Icons.remove,
+        Colors.orange,
+        () => _mostrarBottomSheetOperacion(context, 'Retirar')
+      ),
+      (
+        'Análisis',
+        Icons.analytics,
+        Colors.purple,
+        () => _mostrarDialogoAnalisis(context)
+      ),
+      (
+        'Historial',
+        Icons.history,
+        Colors.blue,
+        () => _mostrarHistorial(context)
+      ),
     ];
 
     return Row(
@@ -238,7 +265,8 @@ class PantallaInversiones extends StatelessWidget {
               const SizedBox(height: 8),
               Text(
                 action.$1,
-                style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+                style:
+                    const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
               ),
             ],
           ),
@@ -268,7 +296,9 @@ class PantallaInversiones extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: isPositive ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+              color: isPositive
+                  ? Colors.green.withOpacity(0.1)
+                  : Colors.red.withOpacity(0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(
@@ -283,7 +313,8 @@ class PantallaInversiones extends StatelessWidget {
               children: [
                 Text(
                   item.$1,
-                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
                 Text(
                   isPositive ? 'Rendimiento positivo' : 'Requiere atención',
@@ -297,13 +328,16 @@ class PantallaInversiones extends StatelessWidget {
             children: [
               Text(
                 ocultarSaldos ? '****' : '\$${item.$2.toStringAsFixed(2)}',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
               const SizedBox(height: 4),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                 decoration: BoxDecoration(
-                  color: isPositive ? Colors.green.withOpacity(0.1) : Colors.red.withOpacity(0.1),
+                  color: isPositive
+                      ? Colors.green.withOpacity(0.1)
+                      : Colors.red.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(4),
                 ),
                 child: Text(
@@ -322,7 +356,8 @@ class PantallaInversiones extends StatelessWidget {
     );
   }
 
-  Widget _buildNewsCard(BuildContext context, String title, String subtitle, String content, IconData icon, Color color) {
+  Widget _buildNewsCard(BuildContext context, String title, String subtitle,
+      String content, IconData icon, Color color) {
     return GestureDetector(
       onTap: () => showDialog(
         context: context,
@@ -331,7 +366,8 @@ class PantallaInversiones extends StatelessWidget {
             children: [
               Icon(icon, color: color),
               const SizedBox(width: 10),
-              Expanded(child: Text(title, style: const TextStyle(fontSize: 18))),
+              Expanded(
+                  child: Text(title, style: const TextStyle(fontSize: 18))),
             ],
           ),
           content: SingleChildScrollView(
@@ -339,9 +375,11 @@ class PantallaInversiones extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(content, style: const TextStyle(fontSize: 16, height: 1.5)),
+                Text(content,
+                    style: const TextStyle(fontSize: 16, height: 1.5)),
                 const SizedBox(height: 20),
-                const Text('Fuente: Análisis Financiero Interno', style: TextStyle(fontSize: 12, color: Colors.grey)),
+                const Text('Fuente: Análisis Financiero Interno',
+                    style: TextStyle(fontSize: 12, color: Colors.grey)),
               ],
             ),
           ),
@@ -370,7 +408,8 @@ class PantallaInversiones extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 14),
                   ),
                   const SizedBox(height: 4),
                   Text(
@@ -430,7 +469,8 @@ class PantallaInversiones extends StatelessWidget {
                   Navigator.pop(context);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Operación "$operacion" realizada con éxito (Simulado)'),
+                      content:
+                          Text('Operación "$operacion" realizada con éxito'),
                       backgroundColor: Colors.green,
                     ),
                   );
@@ -501,9 +541,12 @@ class PantallaInversiones extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  _buildHistoryItem('Compra Apple Inc.', 'Hace 2 días', '- \$500.00'),
-                  _buildHistoryItem('Dividendo CETES', 'Hace 5 días', '+ \$120.00'),
-                  _buildHistoryItem('Depósito a Fondo', 'Hace 1 semana', '+ \$1,000.00'),
+                  _buildHistoryItem(
+                      'Compra Apple Inc.', 'Hace 2 días', '- \$500.00'),
+                  _buildHistoryItem(
+                      'Dividendo CETES', 'Hace 5 días', '+ \$120.00'),
+                  _buildHistoryItem(
+                      'Depósito a Fondo', 'Hace 1 semana', '+ \$1,000.00'),
                 ],
               ),
             ),
@@ -528,12 +571,13 @@ class PantallaInversiones extends StatelessWidget {
     );
   }
 
-  void _mostrarPortafolioCompleto(BuildContext context, List<dynamic> inversiones) {
+  void _mostrarPortafolioCompleto(
+      BuildContext context, List<dynamic> inversiones) {
     // Aquí podrías navegar a una pantalla más detallada o mostrar un modal full-screen
     showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-         shape: const RoundedRectangleBorder(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (context) => DraggableScrollableSheet(
@@ -546,12 +590,15 @@ class PantallaInversiones extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Portafolio Completo', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+              const Text('Portafolio Completo',
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
               const SizedBox(height: 20),
               Expanded(
                 child: ListView(
                   controller: controller,
-                  children: inversiones.map((item) => _buildInvestmentItem(item)).toList(),
+                  children: inversiones
+                      .map((item) => _buildInvestmentItem(item))
+                      .toList(),
                 ),
               ),
             ],
@@ -560,9 +607,10 @@ class PantallaInversiones extends StatelessWidget {
       ),
     );
   }
-  
-  void _mostrarDetalleInversion(BuildContext context, (String, double, double) item) {
-     showDialog(
+
+  void _mostrarDetalleInversion(
+      BuildContext context, (String, double, double) item) {
+    showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(item.$1),
@@ -570,17 +618,17 @@ class PantallaInversiones extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Valor Actual: \$${item.$2.toStringAsFixed(2)}', style: const TextStyle(fontSize: 16)),
+            Text('Valor Actual: \$${item.$2.toStringAsFixed(2)}',
+                style: const TextStyle(fontSize: 16)),
             const SizedBox(height: 10),
-            Text('Rendimiento: ${item.$3}%', 
-              style: TextStyle(
-                fontSize: 16, 
-                color: item.$3 >= 0 ? Colors.green : Colors.red,
-                fontWeight: FontWeight.bold
-              )
-            ),
+            Text('Rendimiento: ${item.$3}%',
+                style: TextStyle(
+                    fontSize: 16,
+                    color: item.$3 >= 0 ? Colors.green : Colors.red,
+                    fontWeight: FontWeight.bold)),
             const SizedBox(height: 20),
-            const Text('Detalles adicionales del instrumento financiero simulados aquí.')
+            const Text(
+                'Detalles adicionales del instrumento financiero simulados aquí.')
           ],
         ),
         actions: [
@@ -591,7 +639,8 @@ class PantallaInversiones extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-               _mostrarBottomSheetOperacion(context, 'Comprar más de ${item.$1}');
+              _mostrarBottomSheetOperacion(
+                  context, 'Comprar más de ${item.$1}');
             },
             child: const Text('Invertir más'),
           )

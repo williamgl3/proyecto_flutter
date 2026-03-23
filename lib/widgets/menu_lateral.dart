@@ -32,9 +32,20 @@ class MenuLateral extends StatelessWidget {
                 itemCount: opciones.length,
                 itemBuilder: (context, index) {
                   return _buildMenuItem(
+                    context: context,
                     opcion: opciones[index],
                     isSelected: indiceSeleccionado == index,
-                    onTap: () => onItemTapped(index),
+                    onTap: () {
+                      onItemTapped(index);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Entrando a: ${opciones[index]}'),
+                          duration: const Duration(milliseconds: 500),
+                          backgroundColor:
+                              const Color.fromARGB(255, 44, 44, 44),
+                        ),
+                      );
+                    },
                   );
                 },
               ),
@@ -53,7 +64,6 @@ class MenuLateral extends StatelessWidget {
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.notifications_none, color: Colors.white70, size: 20),
               Icon(Icons.search, color: Colors.white70, size: 20),
             ],
           ),
@@ -79,6 +89,7 @@ class MenuLateral extends StatelessWidget {
   }
 
   Widget _buildMenuItem({
+    required BuildContext context,
     required String opcion,
     required bool isSelected,
     required VoidCallback onTap,
